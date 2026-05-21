@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task 5</title>
+
+  <style>
+    body {
+      font-family: Arial;
+    }
+
+    /* Product container */
+    #products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* Card design */
+    .card {
+      border: 1px solid #ddd;
+      padding: 12px;
+      width: 200px;
+      border-radius: 10px;
+      background-color: #fff;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    /*  Hover Effect */
+    .card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+    }
+
+    /* Image style */
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      transition: 0.3s;
+    }
+
+    .card:hover img {
+      transform: scale(1.1);
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <h2>Task 5 - Products</h2>
+
+  <div id="products"></div>
+
+  <script>
+
+    let container = document.getElementById("products");
+
+    fetch("https://fakestoreapi.com/products")
+      .then(res => res.json())
+      .then(data => {
+
+        data.forEach(product => {
+
+          let div = document.createElement("div");
+          div.className = "card";
+
+          div.innerHTML = `
+            <img src="${product.image}">
+            <b>${product.title.slice(0,20)}...</b><br>
+            ${product.description.slice(0,50)}...<br>
+            ₹${product.price}
+          `;
+
+          container.appendChild(div);
+
+        });
+
+      })
+      .catch(() => {
+        container.innerText = "Error Fetching Data";
+      });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task 4</title>
+
+  <style>
+    body {
+      font-family: Arial;
+    }
+
+    #products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 200px;
+    }
+
+    img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <h2>Task 4 - Products</h2>
+
+  <div id="products"></div>
+
+  <script>
+
+    let container = document.getElementById("products");
+
+    fetch("https://fakestoreapi.com/products")
+      .then(res => res.json())
+      .then(data => {
+
+        data.forEach(product => {
+
+          let div = document.createElement("div");
+          div.className = "card";
+
+          div.innerHTML = `
+            <img src="${product.image}">
+            <b>${product.title.slice(0, 20)}...</b><br>
+            ${product.description.slice(0, 50)}...<br>
+            ₹${product.price}
+          `;
+
+          container.appendChild(div);
+
+        });
+
+      })
+      .catch(() => {
+        container.innerText = "Error Fetching Data";
+      });
+
+  </script>
+
+</body>
+</html>
